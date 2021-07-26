@@ -2,6 +2,10 @@ package com.github.gustavomaciel.dev.api.branch.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -40,7 +44,7 @@ public class BranchServiceTest {
     Branch branch = createValidBranch();
     Mockito.when(repository.existsByAddress(Mockito.anyString())).thenReturn(false);
     Mockito.when(repository.save(branch)).thenReturn(
-                                                      Branch.builder().id(101L)
+                                                      Branch.builder().id(1L)
                                                       .address("calle808")
                                                       .latitude(1234D)
                                                       .longitude(4321D)
@@ -82,4 +86,102 @@ public class BranchServiceTest {
     Mockito.verify(repository, Mockito.never()).save(branch);
     
   }
+  
+  @Test
+  @DisplayName("Should get a branch by ID")
+  public void getBranchByIdTest() {
+    
+    Long id = 101L;
+    Branch branch = createValidBranch();
+    branch.setId(id);
+    Mockito.when(repository.findById(id)).thenReturn(Optional.of(branch));
+    
+    
+    Optional<Branch> branchFound = service.getById(id);
+    
+    
+    assertThat( branchFound.isPresent()).isTrue();
+    assertThat( branchFound.get().getId()).isEqualTo(id);
+    assertThat( branchFound.get().getAddress()).isEqualTo(branch.getAddress());
+    assertThat( branchFound.get().getLatitude()).isEqualTo(branch.getLatitude());
+    assertThat( branchFound.get().getLongitude()).isEqualTo(branch.getLongitude());
+    
+  }
+  
+  @Test
+  @DisplayName("Should return empty when branch doesnt exist")
+  public void branchNotFoundByIdTetst() {
+    
+    Long id = 101L;
+    Mockito.when(repository.findById(id)).thenReturn(Optional.empty());
+    
+    
+    Optional<Branch> branchFound = service.getById(id);
+    
+    
+    assertThat( branchFound.isPresent()).isFalse();
+    
+  }
+  
+  @Test
+  @DisplayName("Should filter branch by properties")
+  public void findBranchTest() {
+    
+    Branch branch = createValidBranch();
+    Branch branch2 = createValidBranch();
+
+    Mockito.when(repository.findAll())
+            .thenReturn(Arrays.asList(branch,branch2));
+    
+    List<Branch> result = service.getAll();
+    
+    assertThat(result.size()).isEqualTo(2);
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
