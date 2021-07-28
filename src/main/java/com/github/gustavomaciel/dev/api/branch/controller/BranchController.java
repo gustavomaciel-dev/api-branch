@@ -5,7 +5,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -63,7 +62,7 @@ public class BranchController {
   }
   
   @GetMapping("/nearest")
-  public ResponseEntity<BranchDTO> findNearest(BranchDTO branchDTO, Pageable pageRequest){
+  public ResponseEntity<BranchDTO> findNearest(BranchDTO branchDTO){
     log.debug("findNearest endpoint was invoked");
     if (null == branchDTO.getLatitude() || null == branchDTO.getLongitude()) {
       log.error("bad request, latidude: {}, longitude: {}", branchDTO.getLatitude(), branchDTO.getLongitude());
@@ -74,7 +73,6 @@ public class BranchController {
       log.debug("call to service.getAll() without results");
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-    assert branchList.isEmpty(): "La lista no puede estar vacia!";  
     log.debug("calculaing the nearest branch...");
     branchList.sort( (Branch b1, Branch b2) -> b1.distance(branchDTO.getLatitude(), branchDTO.getLongitude())
                                               .compareTo(b2.distance(branchDTO.getLatitude(), branchDTO.getLongitude())) );

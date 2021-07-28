@@ -32,7 +32,7 @@ public class BranchRepositoryTest {
   @DisplayName("Should return true when Branch exists in database")
   public void returnTrueWhenIdExists() {
     //stage
-    Branch branch = createBranch();
+    Branch branch = createBranch(1234D);
     branch = entityManager.persist(branch);
     
     //execution
@@ -42,10 +42,10 @@ public class BranchRepositoryTest {
     assertThat(exists).isTrue();
   }
 
-  private Branch createBranch() {
+  private Branch createBranch(Double latitud) {
     Branch branch = Branch.builder()
                                   .address("calle808")
-                                  .latitude(1234D)
+                                  .latitude(latitud)
                                   .longitude(4321D)
                                   .build();
     return branch;
@@ -55,7 +55,7 @@ public class BranchRepositoryTest {
   @DisplayName("Should return false when Branch doesnt exist in database")
   void returnFalseWhenAddressDoesntExist() {
     //stage
-    String address = "calle808";
+    String address = "calle000";
     
     //execution
     boolean exists = repository.existsByAddress(address);
@@ -69,7 +69,7 @@ public class BranchRepositoryTest {
   void returnTrueWhenAddressExists() {
     //stage
     //stage
-    Branch branch = createBranch();
+    Branch branch = createBranch(4567D);
     branch = entityManager.persist(branch);
         
     //execution
@@ -83,7 +83,7 @@ public class BranchRepositoryTest {
   @DisplayName("Should return true when a Branch with these latitude and longitude was found in database")
   void returnTrueWhenLatitudeLongitudeExists() {
     //stage
-    Branch branch = createBranch();
+    Branch branch = createBranch(7654D);
     branch = entityManager.persist(branch);
         
     //execution
@@ -97,7 +97,7 @@ public class BranchRepositoryTest {
   @DisplayName("Should return a Branch by Latitude and Longitude it exists in database")
   void returnBranchByLatitudeLongitude() {
     //stage
-    Branch branch = createBranch();
+    Branch branch = createBranch(9876D);
     branch = entityManager.persist(branch);
         
     //execution
@@ -111,7 +111,7 @@ public class BranchRepositoryTest {
   @DisplayName("Should return a Branch by Id")
   void findByIdTest() {
     //stage
-    Branch branch = createBranch();
+    Branch branch = createBranch(6543D);
     entityManager.persist(branch);
     
     //execution

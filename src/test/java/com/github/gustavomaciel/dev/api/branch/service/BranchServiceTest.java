@@ -69,7 +69,7 @@ public class BranchServiceTest {
   @Test
   @DisplayName("Should return an exception when try to save a branch with address already exists")
   public void shouldNotSaveABranchAddressAlreadyExists() {
-    String errorMessage = "Ya existe Sucursal con la direccion indicada";
+    String errorMessage = "Ya existe una Sucursal con la direccion indicada";
 
     //stage
     Branch branch = createValidBranch();

@@ -6,7 +6,7 @@ target
 .project
 .classpath
 
-.attach_pid14004
+.attach_pid*
 
 # Compiled class file
 *.class
