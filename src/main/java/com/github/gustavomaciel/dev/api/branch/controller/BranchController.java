@@ -30,7 +30,7 @@ import com.github.gustavomaciel.dev.api.branch.service.BranchService;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/api/branches")
+@RequestMapping("/api/v1/branches")
 @Slf4j
 public class BranchController {
   

@@ -37,7 +37,7 @@ import com.github.gustavomaciel.dev.api.branch.service.BranchService;
 @AutoConfigureMockMvc
 public class BranchControllerTest {
 
-  static String BRANCH_API = "/api/branches";
+  static String BRANCH_API = "/api/v1/branches";
 
   @Autowired
   MockMvc mvc;

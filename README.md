@@ -5,7 +5,7 @@ Api allows crate a new branch, get a branch by id or get nearest branch to laitu
 ##### POST
 
 ```
-/api/branches  create a new branch
+/api/v1/branches  create a new branch
 {
     "direccion":"String",
     "latitud":"String",
@@ -30,8 +30,8 @@ EXAMPLE:
 ##### GET BY ID (return a branch by ID)
 
 ```
-/api/branches/{id}
-/api/branches/5
+/api/v1/branches/{id}
+/api/v1/branches/5
 
 Response: OK (200)
 {
@@ -51,7 +51,7 @@ Example:
 ##### GET NEAREST AT POINT (return nearest branch by latitude and longitude parameters)
 
 ```
-/api/branches/nearest?latitude=1234&longitude=4324
+/api/v1/branches/nearest?latitude=1234&longitude=4324
 Response: OK (200)
 {
     "direccion":"String",
