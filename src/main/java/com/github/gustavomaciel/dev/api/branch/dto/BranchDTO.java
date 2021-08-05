@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class BranchDTO {
   
-  private Long id;
+  private Long branchId;
 
   @NotNull
-  private String address;
+  private String street;
   
   @NotNull
   private Double latitude;

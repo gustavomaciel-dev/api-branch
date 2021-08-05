@@ -17,6 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.github.gustavomaciel.dev.api.branch.exceptions.BusinessException;
+import com.github.gustavomaciel.dev.api.branch.model.Address;
 import com.github.gustavomaciel.dev.api.branch.model.Branch;
 import com.github.gustavomaciel.dev.api.branch.repository.BranchRepository;
 import com.github.gustavomaciel.dev.api.branch.service.impl.BranchServiceImpl;
@@ -42,28 +43,25 @@ public class BranchServiceTest {
 
     //stage
     Branch branch = createValidBranch();
-    Mockito.when(repository.existsByAddress(Mockito.anyString())).thenReturn(false);
-    Mockito.when(repository.save(branch)).thenReturn(
-                                                      Branch.builder().id(1L)
-                                                      .address("calle808")
-                                                      .latitude(1234D)
-                                                      .longitude(4321D)
-                                                      .build()
-                                                    );
+    Mockito.when(repository.existsByAddress(Mockito.any())).thenReturn(false);
+    Mockito.when(repository.save(branch)).thenReturn(branch);
     //execution
     Branch branchSaved = service.save(branch);
     
     //verify
     assertThat(branchSaved.getId()).isNotNull();
-    assertThat(branchSaved.getAddress()).isEqualTo("calle808");
-    assertThat(branchSaved.getLatitude()).isEqualTo(1234);
-    assertThat(branchSaved.getLongitude()).isEqualTo(4321);
+    assertThat(branchSaved.getAddress().getStreet()).isEqualTo("calle808");
+    assertThat(branchSaved.getAddress().getLatitude()).isEqualTo(1234);
+    assertThat(branchSaved.getAddress().getLongitude()).isEqualTo(4321);
     
   }
 
   private Branch createValidBranch() {
-    Branch branch = Branch.builder().address("calle808").latitude(1234D).longitude(4321D).build();
-    return branch;
+    Address address = Address.builder().street("calle808").latitude(1234D).longitude(4321D).build();
+    return Branch.builder()
+                        .id(1L)
+                        .address(address).build();
+    
   }
   
   @Test
@@ -73,7 +71,7 @@ public class BranchServiceTest {
 
     //stage
     Branch branch = createValidBranch();
-    Mockito.when(repository.existsByAddress(Mockito.anyString())).thenReturn(true);
+    Mockito.when(repository.existsByAddress(Mockito.any())).thenReturn(true);
     
     //execution
     Throwable excpetion = Assertions.catchThrowable( () -> service.save(branch));
@@ -103,8 +101,8 @@ public class BranchServiceTest {
     assertThat( branchFound.isPresent()).isTrue();
     assertThat( branchFound.get().getId()).isEqualTo(id);
     assertThat( branchFound.get().getAddress()).isEqualTo(branch.getAddress());
-    assertThat( branchFound.get().getLatitude()).isEqualTo(branch.getLatitude());
-    assertThat( branchFound.get().getLongitude()).isEqualTo(branch.getLongitude());
+    assertThat( branchFound.get().getAddress().getLatitude()).isEqualTo(branch.getAddress().getLatitude());
+    assertThat( branchFound.get().getAddress().getLongitude()).isEqualTo(branch.getAddress().getLongitude());
     
   }
   

@@ -1,6 +1,7 @@
  package com.github.gustavomaciel.dev.api.branch.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -22,6 +23,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.github.gustavomaciel.dev.api.branch.dto.BranchDTO;
 import com.github.gustavomaciel.dev.api.branch.exceptions.ApiErrors;
 import com.github.gustavomaciel.dev.api.branch.exceptions.BusinessException;
+import com.github.gustavomaciel.dev.api.branch.model.Address;
 import com.github.gustavomaciel.dev.api.branch.model.Branch;
 import com.github.gustavomaciel.dev.api.branch.service.BranchService;
 
@@ -46,19 +48,23 @@ public class BranchController {
   @ResponseStatus(HttpStatus.CREATED)
   public BranchDTO create(@RequestBody @Valid BranchDTO dto) {
     log.debug("create endpoint was invoked");
-    Branch branch = modelMapper.map(dto, Branch.class);
+    Address address = modelMapper.map(dto, Address.class);
+    Branch branch = Branch.builder().address(address).build();
     branch = service.save(branch); 
     log.info("new branch was created");
-    return modelMapper.map(branch, BranchDTO.class);
+    BranchDTO branchDTO = modelMapper.map(branch.getAddress(), BranchDTO.class);
+    branchDTO.setBranchId(branch.getId());
+    return branchDTO;
   }
   
   @GetMapping("{id}")
   public BranchDTO get(@PathVariable Long id) {
     log.debug("get endpoint was invoked with ID param: {}", id);
-    return service
-                .getById(id)
-                .map( branch -> modelMapper.map(branch, BranchDTO.class) )
-                .orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND));
+    Optional<Branch> branchDTO = service.getById(id);
+    BranchDTO dto = branchDTO.map(branch -> modelMapper.map(branch.getAddress(), BranchDTO.class))
+        .orElseThrow(() ->  new ResponseStatusException(HttpStatus.NOT_FOUND));
+        dto.setBranchId(branchDTO.isPresent() ? branchDTO.get().getId() : id);
+    return dto;
   }
   
   @GetMapping("/nearest")
@@ -77,7 +83,10 @@ public class BranchController {
     branchList.sort( (Branch b1, Branch b2) -> b1.distance(branchDTO.getLatitude(), branchDTO.getLongitude())
                                               .compareTo(b2.distance(branchDTO.getLatitude(), branchDTO.getLongitude())) );
     log.debug("return nearest branch: {}", branchList.get(0).toString());
-    return new ResponseEntity<>(modelMapper.map(branchList.get(0), BranchDTO.class), HttpStatus.OK);
+    Address address = modelMapper.map(branchList.get(0).getAddress(), Address.class);
+    BranchDTO responseDTO = modelMapper.map(address, BranchDTO.class);
+    responseDTO.setBranchId(branchList.get(0).getId());
+    return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     
   }
   

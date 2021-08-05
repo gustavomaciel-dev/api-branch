@@ -14,13 +14,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import com.github.gustavomaciel.dev.api.branch.model.Address;
 import com.github.gustavomaciel.dev.api.branch.model.Branch;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
 @DataJpaTest
 @AutoConfigureMockMvc
-public class BranchRepositoryTest {
+class BranchRepositoryTest {
 
   @Autowired
   TestEntityManager entityManager;
@@ -43,26 +44,16 @@ public class BranchRepositoryTest {
   }
 
   private Branch createBranch(Double latitud) {
-    Branch branch = Branch.builder()
-                                  .address("calle808")
-                                  .latitude(latitud)
-                                  .longitude(4321D)
-                                  .build();
+    Address address = Address.builder()
+                                    .street("calle808")
+                                    .latitude(latitud)
+                                    .longitude(4321D)
+                                    .build();
+    Branch branch = Branch.builder().address(address)
+                                    .build();
     return branch;
   }
   
-  @Test
-  @DisplayName("Should return false when Branch doesnt exist in database")
-  void returnFalseWhenAddressDoesntExist() {
-    //stage
-    String address = "calle000";
-    
-    //execution
-    boolean exists = repository.existsByAddress(address);
-    
-    //verify
-    assertThat(exists).isFalse();
-  }
   
   @Test
   @DisplayName("Should return true when Branch exists in database")
@@ -80,20 +71,6 @@ public class BranchRepositoryTest {
   }
   
   @Test
-  @DisplayName("Should return true when a Branch with these latitude and longitude was found in database")
-  void returnTrueWhenLatitudeLongitudeExists() {
-    //stage
-    Branch branch = createBranch(7654D);
-    branch = entityManager.persist(branch);
-        
-    //execution
-    boolean exists = repository.existsByLatitudeAndLongitude(branch.getLatitude(), branch.getLongitude());
-    
-    //verify
-    assertThat(exists).isTrue();
-  }
-  
-  @Test
   @DisplayName("Should return a Branch by Latitude and Longitude it exists in database")
   void returnBranchByLatitudeLongitude() {
     //stage
@@ -101,7 +78,7 @@ public class BranchRepositoryTest {
     branch = entityManager.persist(branch);
         
     //execution
-    Optional<Branch> branchFound = repository.findByLatitudeAndLongitude(branch.getLatitude(), branch.getLongitude());
+    Optional<Branch> branchFound = repository.findByAddress(branch.getAddress());
     
     //verify
     assertThat(branchFound.isPresent()).isTrue();
