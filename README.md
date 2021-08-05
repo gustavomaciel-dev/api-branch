@@ -1,6 +1,21 @@
 # api-branch v1.0
 #### Description
 Api allows crate a new branch, get a branch by id or get nearest branch to laitude and longitude params
+
+#### Compile and Execute project
+```
+
+ 1) git clone https://github.com/gustavomaciel-dev/api-branch.git
+ 2) got to folder /api-branch:
+ 3)mvn clean package
+ 4)docker build -t api-branch:0.0.1 .
+ 5)docker run -d --name api-branch -p 8080:8080 api-branch:0.0.1
+```
+#### Health
+```
+http://localhost:8080/actuator/health
+```
+
 # Http methods
 ##### POST
 
@@ -76,16 +91,4 @@ openapi
 actuator
 jpa
 ```
-#### Compile and Execute project
-```
-clone project from https://github.com/gustavomaciel-dev/api-branch.git
 
-in folder /api-branch:
- 1)mvn clean package
- 2)docker build -t api-branch:0.0.1 .
- 3)docker run -d --name api-branch -p 8080:8080 api-branch:0.0.1
-```
-#### Health
-```
-http://localhost:8080/actuator/health
-```
