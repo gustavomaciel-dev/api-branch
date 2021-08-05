@@ -17,6 +17,7 @@ http://localhost:8080/actuator/health
 ```
 
 # Http methods
+examples data in resources/data.sql
 ##### POST
 
 ```
