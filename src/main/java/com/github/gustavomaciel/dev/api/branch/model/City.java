@@ -35,9 +35,6 @@ public class City {
   @Column
   private String name;
   
-  @Column
-  private String postalCode;
-  
 //  @OneToOne(mappedBy = "city")
 //  @ToStringExclude
 //  private Address address;

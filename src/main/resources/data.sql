@@ -37,11 +37,11 @@ INSERT INTO province (id, name, country_id) VALUES
 
 
 --city
-INSERT INTO city (id, name, postal_code, province_id) VALUES
-(1, 'Quilmes', '1879', '1'),
-(2, 'Avellaneda', '1920', '1'),
-(3, 'Capital Federal', '1414', '1'),
-(4, 'Posadas', '1414', '15');
+INSERT INTO city (id, name, province_id) VALUES
+(1, 'Quilmes', '1'),
+(2, 'Avellaneda', '1'),
+(3, 'Capital Federal', '1'),
+(4, 'Posadas', '15');
 
 --Address
 INSERT INTO address (id, street, latitude, longitude, city_id) VALUES ( 1, 'calle Mascherano 1000', '7234.0', '6321.0', '1'),

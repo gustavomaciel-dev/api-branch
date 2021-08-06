@@ -93,13 +93,15 @@ actuator
 jpa
 ```
 
-#### DataBase Model
+#### Model
 ```
-h2
-lombok
-modelmapper
-openapi
-actuator
-jpa
+Country
+    ID, NAME
+Province
+    ID, NAME, COUNTRY_ID
+City
+    ID, NAME, PROVINCE_ID
+Address
+    ID, STREET, LATITUDE, LONGITUDE, CITY_ID
 ```
 
