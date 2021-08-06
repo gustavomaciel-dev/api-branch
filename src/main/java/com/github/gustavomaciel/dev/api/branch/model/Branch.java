@@ -10,8 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.apache.commons.lang3.builder.ToStringExclude;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,7 +32,7 @@ public class Branch {
   public Long id;
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "address_id", referencedColumnName = "id")
-  @ToStringExclude private Address address = new Address();
+  private Address address = new Address();
 
   /**
    * 
@@ -62,4 +60,6 @@ public class Branch {
   private static double radiansToDecimal(double rad) {
     return (rad * 180.0 / Math.PI);
   }
+  
+  
 }

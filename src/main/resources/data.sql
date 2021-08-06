@@ -40,19 +40,23 @@ INSERT INTO province (id, name, country_id) VALUES
 INSERT INTO city (id, name, postal_code, province_id) VALUES
 (1, 'Quilmes', '1879', '1'),
 (2, 'Avellaneda', '1920', '1'),
-(3, 'Capital Federal', '1414', '1');
+(3, 'Capital Federal', '1414', '1'),
+(4, 'Posadas', '1414', '15');
 
 --Address
-INSERT INTO address (id, street, latitude, longitude, city_id) VALUES ( 1, 'calle 811, Quilmes Oeste', '7234.0', '6321.0', '1'),
-														 ( 2, 'calle 808, Quilmes Oeste', '1234.0', '4321.0', '1'),
-														 ( 3, 'calle 810, Quilmes Oeste', '6234.0', '5321.0', '1'),
-														 ( 4, 'calle 809, Quilmes Oeste', '1237.0', '4325.0', '1');
+INSERT INTO address (id, street, latitude, longitude, city_id) VALUES ( 1, 'calle Mascherano 1000', '7234.0', '6321.0', '1'),
+														 ( 2, 'calle Juan Roman Riquelme 1500', '1234.0', '4321.0', '1'),
+														 ( 3, 'calle Ronaldinho 200 ', '6234.0', '5321.0', '1'),
+														 ( 4, 'calle El Diego 10', '1237.0', '4325.0', '1'),
+														 ( 5, 'calle Bochini 1600', '3721.0', '2543.0', '2'),
+														 ( 6, 'calle Riestra 1330', '2767.0', '3245.0', '3'),
+ 														 ( 7, 'calle Facundo Manes 22', '7676.0', '3238.0', '4');
 
 --Branches
 INSERT INTO branch (address_id) VALUES ( 1),
 									   ( 2),
 								       ( 3),
-								       ( 4);
-
-/*
-								       */
+								       ( 7),
+								       ( 4),
+								       ( 5),
+								       ( 6);

@@ -16,13 +16,12 @@ import org.apache.commons.lang3.builder.ToStringExclude;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -42,10 +41,12 @@ public class Address implements Serializable{
   @Column
   private Double longitude;
   
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "city_id", referencedColumnName = "id")
-  @ToStringExclude
-  private City city;
+//  @OneToOne(cascade = CascadeType.ALL)
+//  @JoinColumn(name = "city_id", referencedColumnName = "id")
+//  @ToStringExclude
+//  private City city;
+  @Column(name = "city_id", nullable = false)
+  private String city;
   
   @OneToOne(mappedBy = "address")
   private Branch branch;

@@ -93,3 +93,13 @@ actuator
 jpa
 ```
 
+#### DataBase Model
+```
+h2
+lombok
+modelmapper
+openapi
+actuator
+jpa
+```
+

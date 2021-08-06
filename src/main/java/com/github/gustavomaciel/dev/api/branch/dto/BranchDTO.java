@@ -19,10 +19,12 @@ public class BranchDTO {
   private String street;
   
   @NotNull
+  private String city;
+  
+  @NotNull
   private Double latitude;
   
   @NotNull
   private Double longitude;
 
-  
 }

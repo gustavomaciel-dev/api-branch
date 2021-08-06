@@ -38,9 +38,9 @@ public class City {
   @Column
   private String postalCode;
   
-  @OneToOne(mappedBy = "city")
-  @ToStringExclude
-  private Address address;
+//  @OneToOne(mappedBy = "city")
+//  @ToStringExclude
+//  private Address address;
   
   @ManyToOne
   @JoinColumn(name = "province_id", referencedColumnName = "id")
